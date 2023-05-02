@@ -1,30 +1,27 @@
-const express = require('express');
-const app = express();
+const http = require('http');
 
-// Set up CORS headers
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*"); // Allow any origin to access the server
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE"); // Allow specific HTTP methods
-  res.header("Access-Control-Allow-Headers", "Content-Type"); // Allow specific headers
-  next();
+// Set up the HTTP request options
+const options = {
+  hostname: 'test-m3c6.onrender.com',
+  port: 80,
+  path: '/data',
+  method: 'GET'
+};
+
+// Send the HTTP request
+const req = http.request(options, (res) => {
+  console.log(`statusCode: ${res.statusCode}`);
+  let data = '';
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+  res.on('end', () => {
+    console.log(data);
+  });
 });
 
-app.get('/', (req, res) => {
-    // Retrieve the data you want to send to the Arduino
-    let data = 'Hello, world!';
-
-    // Send the data as a plain text response
-    res.type('text/plain').send(data);
+req.on('error', (error) => {
+  console.error(error);
 });
 
-app.get('/data', (req, res) => {
-    // Retrieve the data you want to send to the Arduino
-    let data = 'Hello, Arduino!';
-
-    // Send the data as a plain text response
-    res.type('text/plain').send(data);
-});
-
-app.listen(5000, () => {
-    console.log('Server listening on port 5000');
-});
+req.end();
