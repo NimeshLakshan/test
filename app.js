@@ -9,8 +9,9 @@ const options = {
 
 const server = http.createServer((req, res) => {
     // Send an HTTP GET request to the remote server
+    let data = '';
     const request = http.request(options, (response) => {
-        let data = '';
+        
         response.on('data', (chunk) => {
             data += chunk;
         });
@@ -31,7 +32,7 @@ const server = http.createServer((req, res) => {
     // Send a response to the client
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello, world!\n');
+    res.end(data);
 });
 
 server.listen(5000, () => {
