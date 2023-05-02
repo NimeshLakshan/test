@@ -32,7 +32,7 @@ const server = http.createServer((req, res) => {
     // Send a response to the client
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
-    res.end(data);
+    res.end(${data});
 });
 
 server.listen(5000, () => {
