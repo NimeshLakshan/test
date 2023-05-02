@@ -23,7 +23,7 @@ const server = http.createServer((req, res) => {
 
     // Handle errors with the HTTP request
     request.on('error', (error) => {
-        console.error(error);
+        console.log(error);
     });
 
     // End the HTTP request
@@ -32,7 +32,7 @@ const server = http.createServer((req, res) => {
     // Send a response to the client
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
-    res.end(${data});
+    res.end(data);
 });
 
 server.listen(5000, () => {
